@@ -262,33 +262,33 @@ impl AppState<'_> {
     }
 }
 
-#[get("/")]
-async fn index(data: web::Data<AppState<'_>>) -> impl Responder {
-    let (TestResultsCache { results, timestamp }, cache_state) = data.get_results().await;
-    let timestamp_template = timestamp.format("%Y-%m-%d %H:%M:%S UTC").to_string();
-    let html = data
-        .handlebars
-        .render(
-            "main",
-            &json!({ "teams": results, "timestamp": timestamp_template }),
-        )
-        .unwrap();
+// #[get("/")]
+// async fn index(data: web::Data<AppState<'_>>) -> impl Responder {
+//     let (TestResultsCache { results, timestamp }, cache_state) = data.get_results().await;
+//     let timestamp_template = timestamp.format("%Y-%m-%d %H:%M:%S UTC").to_string();
+//     let html = data
+//         .handlebars
+//         .render(
+//             "main",
+//             &json!({ "teams": results, "timestamp": timestamp_template }),
+//         )
+//         .unwrap();
 
-    let mut response_builder = HttpResponse::Ok();
+//     let mut response_builder = HttpResponse::Ok();
 
-    if cache_state == CacheState::Fresh {
-        let expiry: SystemTime = (timestamp + chrono::Duration::seconds(STALE_SECONDS)).into();
-        response_builder.insert_header(("Expires", http::header::Expires(expiry.into())));
-    } else {
-        response_builder
-            .insert_header(("Cache-Control", "public, max-age=1, stale-if-error=86400"));
-    }
+//     if cache_state == CacheState::Fresh {
+//         let expiry: SystemTime = (timestamp + chrono::Duration::seconds(STALE_SECONDS)).into();
+//         response_builder.insert_header(("Expires", http::header::Expires(expiry.into())));
+//     } else {
+//         response_builder
+//             .insert_header(("Cache-Control", "public, max-age=1, stale-if-error=86400"));
+//     }
 
-    response_builder
-        .insert_header(("Link", "<https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css>; rel=preload"))
-        .content_type(ContentType::html())
-        .body(html)
-}
+//     response_builder
+//         .insert_header(("Link", "<https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css>; rel=preload"))
+//         .content_type(ContentType::html())
+//         .body(html)
+// }
 
 // #[get("/favicon.ico")]
 // async fn favicon() -> impl Responder {
