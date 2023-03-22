@@ -2,7 +2,7 @@ use crate::teams::{Team, TEAMS};
 use std::time::Duration;
 use tokio::task::JoinSet;
 
-const TIMEOUT_MS: u16 = 2000;
+const TIMEOUT_MS: u64 = 2000;
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Protocol {
@@ -11,10 +11,10 @@ pub enum Protocol {
 }
 
 impl Protocol {
-    fn as_str(&self) -> &str {
+    const fn as_str(&self) -> &str {
         match self {
-            Protocol::Http => "http",
-            Protocol::Https => "https",
+            Self::Http => "http",
+            Self::Https => "https",
         }
     }
 }
@@ -41,7 +41,7 @@ async fn check_protocol(client: reqwest::Client, team: &Team, protocol: Protocol
     let url = format!("{}://{}/", protocol.as_str(), team.domain);
     match client
         .get(&url)
-        .timeout(Duration::from_millis(TIMEOUT_MS as u64))
+        .timeout(Duration::from_millis(TIMEOUT_MS))
         .send()
         .await
     {

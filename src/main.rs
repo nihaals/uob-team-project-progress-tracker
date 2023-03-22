@@ -1,3 +1,49 @@
+#![warn(clippy::cast_lossless)]
+#![warn(clippy::cast_possible_wrap)]
+#![warn(clippy::default_trait_access)]
+#![warn(clippy::else_if_without_else)]
+#![warn(clippy::empty_enum)]
+#![warn(clippy::empty_line_after_outer_attr)]
+#![warn(clippy::enum_glob_use)]
+#![warn(clippy::equatable_if_let)]
+#![warn(clippy::float_cmp)]
+#![warn(clippy::fn_params_excessive_bools)]
+#![warn(clippy::get_unwrap)]
+#![warn(clippy::inefficient_to_string)]
+#![warn(clippy::integer_division)]
+#![warn(clippy::let_unit_value)]
+#![warn(clippy::linkedlist)]
+#![warn(clippy::lossy_float_literal)]
+#![warn(clippy::macro_use_imports)]
+#![warn(clippy::manual_assert)]
+#![warn(clippy::manual_ok_or)]
+#![warn(clippy::many_single_char_names)]
+#![warn(clippy::map_err_ignore)]
+#![warn(clippy::map_unwrap_or)]
+#![warn(clippy::match_bool)]
+#![warn(clippy::match_on_vec_items)]
+#![warn(clippy::match_same_arms)]
+#![warn(clippy::match_wild_err_arm)]
+#![warn(clippy::match_wildcard_for_single_variants)]
+#![warn(clippy::mem_forget)]
+#![warn(clippy::missing_const_for_fn)]
+#![warn(clippy::must_use_candidate)]
+#![warn(clippy::mut_mut)]
+#![warn(clippy::negative_feature_names)]
+#![warn(non_ascii_idents)]
+#![warn(clippy::option_option)]
+#![warn(clippy::redundant_feature_names)]
+#![warn(clippy::redundant_pub_crate)]
+#![warn(clippy::str_to_string)]
+#![warn(clippy::string_to_string)]
+#![warn(clippy::trait_duplication_in_bounds)]
+#![warn(clippy::unused_async)]
+#![warn(clippy::unused_self)]
+#![warn(clippy::use_self)]
+#![warn(clippy::wildcard_dependencies)]
+#![warn(clippy::wildcard_imports)]
+#![warn(clippy::zero_sized_map_values)]
+
 mod status;
 mod teams;
 
@@ -48,18 +94,18 @@ enum RequestResultStatus {
 impl RequestResultStatus {
     fn to_bootstrap_class(&self) -> String {
         match self {
-            RequestResultStatus::Correct => "link-success",
-            RequestResultStatus::NearlyCorrect => "link-warning",
-            RequestResultStatus::Incorrect => "link-danger",
+            Self::Correct => "link-success",
+            Self::NearlyCorrect => "link-warning",
+            Self::Incorrect => "link-danger",
         }
         .to_owned()
     }
 
     fn to_alt_text(&self) -> String {
         match self {
-            RequestResultStatus::Correct => "Correct",
-            RequestResultStatus::NearlyCorrect => "Nearly correct",
-            RequestResultStatus::Incorrect => "Incorrect",
+            Self::Correct => "Correct",
+            Self::NearlyCorrect => "Nearly correct",
+            Self::Incorrect => "Incorrect",
         }
         .to_owned()
     }
@@ -83,50 +129,50 @@ impl RequestResultTemplate {
 }
 
 impl RequestResultTemplate {
-    fn from_result(request_result: RequestResult, protocol: Protocol) -> RequestResultTemplate {
+    fn from_result(request_result: RequestResult, protocol: Protocol) -> Self {
         match request_result {
-            RequestResult::Ok(status_code) => RequestResultTemplate::new(
+            RequestResult::Ok(status_code) => Self::new(
                 RequestResultResponseTemplate::Ok { status_code },
                 match protocol {
                     Protocol::Http => RequestResultStatus::NearlyCorrect,
                     Protocol::Https => RequestResultStatus::Correct,
                 },
             ),
-            RequestResult::NginxDefaultPage(status_code) => RequestResultTemplate::new(
+            RequestResult::NginxDefaultPage(status_code) => Self::new(
                 RequestResultResponseTemplate::Ok { status_code },
                 RequestResultStatus::NearlyCorrect,
             ),
-            RequestResult::CorrectRedirect(status_code) => RequestResultTemplate::new(
+            RequestResult::CorrectRedirect(status_code) => Self::new(
                 RequestResultResponseTemplate::Redirect { status_code },
                 RequestResultStatus::Correct,
             ),
-            RequestResult::IncorrectRedirect(status_code) => RequestResultTemplate::new(
+            RequestResult::IncorrectRedirect(status_code) => Self::new(
                 RequestResultResponseTemplate::Redirect { status_code },
                 RequestResultStatus::NearlyCorrect,
             ),
             RequestResult::UnexpectedResponse(status_code) => match status_code {
-                418 => RequestResultTemplate::new(
+                418 => Self::new(
                     RequestResultResponseTemplate::Teapot,
                     RequestResultStatus::NearlyCorrect,
                 ),
-                _ => RequestResultTemplate::new(
+                _ => Self::new(
                     RequestResultResponseTemplate::UnexpectedResponse { status_code },
                     RequestResultStatus::Incorrect,
                 ),
             },
-            RequestResult::Timeout => RequestResultTemplate::new(
+            RequestResult::Timeout => Self::new(
                 RequestResultResponseTemplate::Timeout,
                 RequestResultStatus::Incorrect,
             ),
-            RequestResult::UntrustedCertificate => RequestResultTemplate::new(
+            RequestResult::UntrustedCertificate => Self::new(
                 RequestResultResponseTemplate::UntrustedCertificate,
                 RequestResultStatus::NearlyCorrect,
             ),
-            RequestResult::FailedConnect => RequestResultTemplate::new(
+            RequestResult::FailedConnect => Self::new(
                 RequestResultResponseTemplate::FailedConnect,
                 RequestResultStatus::Incorrect,
             ),
-            RequestResult::Error(_) => RequestResultTemplate::new(
+            RequestResult::Error(_) => Self::new(
                 RequestResultResponseTemplate::Error,
                 RequestResultStatus::Incorrect,
             ),
@@ -143,7 +189,7 @@ struct TeamResultTemplate {
 
 impl From<TeamResult> for TeamResultTemplate {
     fn from(team_result: TeamResult) -> Self {
-        TeamResultTemplate {
+        Self {
             team: team_result.team,
             http: RequestResultTemplate::from_result(team_result.http, Protocol::Http),
             https: RequestResultTemplate::from_result(team_result.https, Protocol::Https),
