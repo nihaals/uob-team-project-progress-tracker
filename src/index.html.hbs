@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>UoB Team Project 2022 Status</title>
+    <meta name="description" content="UoB Team Project 2022 Status Page">
+  </head>
+  <body>
+    <p class="ps-2">
+      As of {{timestamp}}
+      <br/>
+      Note: This does not test for incomplete TLS chains.
+      See <a href="https://nginx.org/en/docs/http/configuring_https_servers.html#chains">nginx's docs</a>
+      or <a href="https://whatsmychaincert.com/">What's My Chain Cert?</a> for more info.
+    </p>
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th class="col">Team number</th>
+          <th class="col">HTTP</th>
+          <th class="col">HTTPS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each teams}}
+          <tr id="team-{{zero_pad this.team.team_number}}">
+            <td>{{this.team.team_number}} <a href="#team-{{zero_pad this.team.team_number}}" class="link-secondary">#</a></td>
+            <td>
+              <a class="{{this.http.bootstrap_class}}" href="http://{{this.team.domain}}/" title="{{this.http.alt_text}}">
+                {{this.http.result.type}}
+                {{#if this.http.result.status_code}}
+                  ({{this.http.result.status_code}})
+                {{/if}}
+              </a>
+            </td>
+            <td>
+              <a class="{{this.https.bootstrap_class}}" href="https://{{this.team.domain}}/" title="{{this.https.alt_text}}">
+                {{this.https.result.type}}
+                {{#if this.https.result.status_code}}
+                  ({{this.https.result.status_code}})
+                {{/if}}
+              </a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
