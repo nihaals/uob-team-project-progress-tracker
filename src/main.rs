@@ -47,7 +47,7 @@
 mod status;
 mod teams;
 
-use status::{get_results, Protocol, RequestResult, TeamResult};
+use status::{get_results, HttpProtocol, ProtocolResult, TeamResult};
 
 use actix_web::{
     get,
@@ -57,7 +57,7 @@ use actix_web::{
 use handlebars::handlebars_helper;
 use serde::Serialize;
 use serde_json::json;
-use std::{fs, time::SystemTime};
+use std::fs;
 use teams::Team;
 use tokio::sync::RwLock;
 
@@ -126,31 +126,29 @@ impl RequestResultTemplate {
             alt_text: status.to_alt_text(),
         }
     }
-}
 
-impl RequestResultTemplate {
-    fn from_result(request_result: RequestResult, protocol: Protocol) -> Self {
+    fn from_result(request_result: ProtocolResult, protocol: HttpProtocol) -> Self {
         match request_result {
-            RequestResult::Ok(status_code) => Self::new(
+            ProtocolResult::Ok(status_code) => Self::new(
                 RequestResultResponseTemplate::Ok { status_code },
                 match protocol {
-                    Protocol::Http => RequestResultStatus::NearlyCorrect,
-                    Protocol::Https => RequestResultStatus::Correct,
+                    HttpProtocol::Http => RequestResultStatus::NearlyCorrect,
+                    HttpProtocol::Https => RequestResultStatus::Correct,
                 },
             ),
-            RequestResult::NginxDefaultPage(status_code) => Self::new(
+            ProtocolResult::NginxDefaultPage(status_code) => Self::new(
                 RequestResultResponseTemplate::Ok { status_code },
                 RequestResultStatus::NearlyCorrect,
             ),
-            RequestResult::CorrectRedirect(status_code) => Self::new(
+            ProtocolResult::CorrectRedirect(status_code) => Self::new(
                 RequestResultResponseTemplate::Redirect { status_code },
                 RequestResultStatus::Correct,
             ),
-            RequestResult::IncorrectRedirect(status_code) => Self::new(
+            ProtocolResult::IncorrectRedirect(status_code) => Self::new(
                 RequestResultResponseTemplate::Redirect { status_code },
                 RequestResultStatus::NearlyCorrect,
             ),
-            RequestResult::UnexpectedResponse(status_code) => match status_code {
+            ProtocolResult::UnexpectedResponse(status_code) => match status_code {
                 418 => Self::new(
                     RequestResultResponseTemplate::Teapot,
                     RequestResultStatus::NearlyCorrect,
@@ -160,19 +158,19 @@ impl RequestResultTemplate {
                     RequestResultStatus::Incorrect,
                 ),
             },
-            RequestResult::Timeout => Self::new(
+            ProtocolResult::Timeout => Self::new(
                 RequestResultResponseTemplate::Timeout,
                 RequestResultStatus::Incorrect,
             ),
-            RequestResult::UntrustedCertificate => Self::new(
+            ProtocolResult::UntrustedCertificate => Self::new(
                 RequestResultResponseTemplate::UntrustedCertificate,
                 RequestResultStatus::NearlyCorrect,
             ),
-            RequestResult::FailedConnect => Self::new(
+            ProtocolResult::FailedConnect => Self::new(
                 RequestResultResponseTemplate::FailedConnect,
                 RequestResultStatus::Incorrect,
             ),
-            RequestResult::Error(_) => Self::new(
+            ProtocolResult::Error(_) => Self::new(
                 RequestResultResponseTemplate::Error,
                 RequestResultStatus::Incorrect,
             ),
@@ -191,8 +189,8 @@ impl From<TeamResult> for TeamResultTemplate {
     fn from(team_result: TeamResult) -> Self {
         Self {
             team: team_result.team,
-            http: RequestResultTemplate::from_result(team_result.http, Protocol::Http),
-            https: RequestResultTemplate::from_result(team_result.https, Protocol::Https),
+            http: RequestResultTemplate::from_result(team_result.http, HttpProtocol::Http),
+            https: RequestResultTemplate::from_result(team_result.https, HttpProtocol::Https),
         }
     }
 }
