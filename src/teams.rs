@@ -21,11 +21,11 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 4,
-        domain: "teamda04-22.bham.team",
+        domain: "greenertogether.bham.team",
     },
     Team {
         team_number: 5,
-        domain: "teamda05-22.bham.team",
+        domain: "mypwcv.bham.team",
     },
     Team {
         team_number: 6,
@@ -45,7 +45,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 10,
-        domain: "team10-22.bham.team",
+        domain: "housekeeping.bham.team",
     },
     Team {
         team_number: 11,
@@ -57,7 +57,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 13,
-        domain: "team13-22.bham.team",
+        domain: "tellmyteacher.bham.team",
     },
     Team {
         team_number: 14,
@@ -65,11 +65,11 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 15,
-        domain: "team15-22.bham.team",
+        domain: "risk.bham.team",
     },
     Team {
         team_number: 16,
-        domain: "team16-22.bham.team",
+        domain: "anthology.bham.team",
     },
     Team {
         team_number: 17,
@@ -77,11 +77,11 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 18,
-        domain: "team18-22.bham.team",
+        domain: "scran.bham.team",
     },
     Team {
         team_number: 19,
-        domain: "team19-22.bham.team",
+        domain: "nodenas.bham.team",
     },
     Team {
         team_number: 20,
@@ -89,7 +89,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 21,
-        domain: "team21-22.bham.team",
+        domain: "aurora.bham.team",
     },
     Team {
         team_number: 22,
@@ -101,7 +101,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 24,
-        domain: "team24-22.bham.team",
+        domain: "travelmate.bham.team",
     },
     Team {
         team_number: 25,
@@ -113,7 +113,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 27,
-        domain: "team27-22.bham.team",
+        domain: "freebees.bham.team",
     },
     Team {
         team_number: 28,
@@ -121,7 +121,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 29,
-        domain: "team29-22.bham.team",
+        domain: "portfoliu.bham.team",
     },
     Team {
         team_number: 30,
@@ -141,7 +141,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 34,
-        domain: "team34-22.bham.team",
+        domain: "talespinner.bham.team",
     },
     Team {
         team_number: 35,
@@ -165,7 +165,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 40,
-        domain: "team40-22.bham.team",
+        domain: "drawful.bham.team",
     },
     Team {
         team_number: 41,
@@ -189,7 +189,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 46,
-        domain: "team46-22.bham.team",
+        domain: "speedstudy.bham.team",
     },
     Team {
         team_number: 47,
@@ -197,11 +197,11 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 48,
-        domain: "team48-22.bham.team",
+        domain: "reeltravel.bham.team",
     },
     Team {
         team_number: 49,
-        domain: "teamai49-22.bham.team",
+        domain: "musicmatcher.bham.team",
     },
     Team {
         team_number: 50,
