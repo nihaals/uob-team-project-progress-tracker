@@ -87,13 +87,15 @@ pub(super) async fn http_check_protocol(
                 HttpRequestResult::Timeout
             } else if e.is_connect() {
                 if protocol == HttpProtocol::Https
-                    && format!("{}", e).contains("The certificate was not trusted")
-                {
-                    HttpRequestResult::UntrustedCertificate
-                } else if protocol == HttpProtocol::Https
-                    && format!("{}", e).contains("invalid peer certificate contents: invalid peer certificate: CertNotValidForName")
+                    && (format!("{}", e).contains("CertNotValidForName")
+                        || format!("{}", e).contains("UnrecognisedName"))
                 {
                     HttpRequestResult::InvalidCertificate
+                } else if protocol == HttpProtocol::Https
+                    && format!("{}", e)
+                        .contains("invalid peer certificate contents: invalid peer certificate:")
+                {
+                    HttpRequestResult::UntrustedCertificate
                 } else {
                     HttpRequestResult::FailedConnect
                 }
