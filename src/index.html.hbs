@@ -8,18 +8,32 @@
       crossorigin="anonymous"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>UoB Team Project 2022 Status</title>
-    <meta name="description" content="UoB Team Project 2022 Status Page">
+    <meta name="description" content="UoB Team Project 2022 Status Page" />
   </head>
   <body>
-    <p class="ps-2">
-      As of {{timestamp}}
-      <br/>
-      Note: This does not test for incomplete TLS chains.
-      See <a href="https://nginx.org/en/docs/http/configuring_https_servers.html#chains">nginx's docs</a>
-      or <a href="https://whatsmychaincert.com/">What's My Chain Cert?</a> for more info.
+    <p class="ps-2 mb-0">
+      As of
+      {{timestamp}}
+      <br />
+      This does not test for:
     </p>
+    <ul>
+      <li>
+        Incomplete TLS chains
+        <ul>
+          <li>
+            See
+            <a href="https://nginx.org/en/docs/http/configuring_https_servers.html#chains">nginx's docs</a>
+            or
+            <a href="https://whatsmychaincert.com/">What's My Chain Cert?</a>
+            for more info
+          </li>
+        </ul>
+      </li>
+      <li>&lt;TLS 1.2 support</li>
+    </ul>
     <table class="table table-striped align-middle">
       <thead>
         <tr>
