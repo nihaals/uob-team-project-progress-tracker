@@ -17,6 +17,7 @@ pub enum ProtocolResult {
     UnexpectedResponse(u16),
     Timeout,
     UntrustedCertificate,
+    InvalidCertificate,
     FailedConnect,
     Error(reqwest::Error),
 }
@@ -41,6 +42,7 @@ impl From<HttpRequestResult> for ProtocolResult {
             }
             HttpRequestResult::Timeout => Self::Timeout,
             HttpRequestResult::UntrustedCertificate => Self::UntrustedCertificate,
+            HttpRequestResult::InvalidCertificate => Self::InvalidCertificate,
             HttpRequestResult::FailedConnect => Self::FailedConnect,
             HttpRequestResult::Error(error) => Self::Error(error),
         }

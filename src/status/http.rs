@@ -26,6 +26,7 @@ pub(super) enum HttpRequestResult {
     UnexpectedResponse(u16),
     Timeout,
     UntrustedCertificate,
+    InvalidCertificate,
     FailedConnect,
     Error(reqwest::Error),
 }
@@ -89,6 +90,10 @@ pub(super) async fn http_check_protocol(
                     && format!("{}", e).contains("The certificate was not trusted")
                 {
                     HttpRequestResult::UntrustedCertificate
+                } else if protocol == HttpProtocol::Https
+                    && format!("{}", e).contains("invalid peer certificate contents: invalid peer certificate: CertNotValidForName")
+                {
+                    HttpRequestResult::InvalidCertificate
                 } else {
                     HttpRequestResult::FailedConnect
                 }

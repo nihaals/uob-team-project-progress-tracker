@@ -79,6 +79,8 @@ enum RequestResultResponseTemplate {
     Timeout,
     #[serde(rename = "Untrusted certificate")]
     UntrustedCertificate,
+    #[serde(rename = "Invalid certificate")]
+    InvalidCertificate,
     #[serde(rename = "Failed to connect")]
     FailedConnect,
     #[serde(rename = "Error")]
@@ -164,6 +166,10 @@ impl RequestResultTemplate {
             ),
             ProtocolResult::UntrustedCertificate => Self::new(
                 RequestResultResponseTemplate::UntrustedCertificate,
+                RequestResultStatus::NearlyCorrect,
+            ),
+            ProtocolResult::InvalidCertificate => Self::new(
+                RequestResultResponseTemplate::InvalidCertificate,
                 RequestResultStatus::NearlyCorrect,
             ),
             ProtocolResult::FailedConnect => Self::new(
