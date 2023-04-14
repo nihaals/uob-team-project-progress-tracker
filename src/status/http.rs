@@ -77,6 +77,18 @@ pub(super) async fn http_check_protocol(
                     // Redirects incorrectly
                     HttpRequestResult::IncorrectRedirect(response.status().as_u16())
                 }
+            } else if response.status() == reqwest::StatusCode::FOUND
+                && response.headers().contains_key("Location")
+                && response
+                    .headers()
+                    .get("Location")
+                    .unwrap()
+                    .to_str()
+                    .unwrap()
+                    .starts_with('/')
+            {
+                // Local redirect
+                HttpRequestResult::Ok(response.status().as_u16())
             } else {
                 HttpRequestResult::UnexpectedResponse(response.status().as_u16())
             }
