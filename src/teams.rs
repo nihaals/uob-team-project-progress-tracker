@@ -33,7 +33,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 7,
-        domain: "teamd07-22.bham.team",
+        domain: "clubping.bham.team",
     },
     Team {
         team_number: 8,
@@ -65,7 +65,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 15,
-        domain: "risk.bham.team",
+        domain: "control.bham.team",
     },
     Team {
         team_number: 16,
@@ -225,7 +225,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 55,
-        domain: "teamai55-22.bham.team",
+        domain: "askit.bham.team",
     },
     Team {
         team_number: 56,
