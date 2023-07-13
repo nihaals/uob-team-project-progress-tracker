@@ -185,7 +185,7 @@ pub const TEAMS: &[Team] = &[
     },
     Team {
         team_number: 45,
-        domain: "team45-22.bham.team",
+        domain: "beaverbookings.bham.team",
     },
     Team {
         team_number: 46,
